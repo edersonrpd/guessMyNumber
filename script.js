@@ -8,9 +8,10 @@ document.querySelector('.guess').value = 23;
 console.log(document.querySelector('.guess').value);
 */
 // gerando número aleatório entre 1 e 20 e gravando em variavel
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
-document.querySelector('.number').textContent = secretNumber;
+let highScore = 0;
+//document.querySelector('.number').textContent = secretNumber;
 
 document.querySelector('.check').addEventListener('click', function () {
 	//convertendo o que foi digitado no input em numero e gravando em uma variavel
@@ -22,11 +23,17 @@ document.querySelector('.check').addEventListener('click', function () {
 	}
 	// Quando o jogador vencer
 	else if (guess === secretNumber) {
+		document.querySelector('.number').textContent = secretNumber;
 		document.querySelector('.message').textContent = '🎉 Correct Number';
 		document.querySelector('body').style.backgroundColor = '#60b347';
 		document.querySelector('.number').style.width = '30rem';
-		score++;
 		document.querySelector('.score').textContent = score;
+
+		//Sempre que score for maior que highScore gravar na variavel
+		if (score > highScore) {
+			highScore = score;
+			document.querySelector('.highscore').textContent = highScore;
+		}
 
 		//Quando guess for maior que o secretNumber
 	} else if (guess > secretNumber) {
@@ -53,4 +60,14 @@ document.querySelector('.check').addEventListener('click', function () {
 		}
 	}
 });
-console.log(document.querySelector('.check'));
+
+document.querySelector('.again').addEventListener('click', () => {
+	score = 20;
+	secretNumber = Math.trunc(Math.random() * 20) + 1;
+	document.querySelector('.message').textContent = 'Start guessing...';
+	document.querySelector('.score').textContent = score;
+	document.querySelector('.number').textContent = '?';
+	document.querySelector('.number').style.width = '15rem';
+	document.querySelector('.guess').value = '';
+	document.querySelector('body').style.backgroundColor = '#222';
+});
